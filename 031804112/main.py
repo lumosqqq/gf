@@ -3,6 +3,9 @@ import sys
 from collections import Counter
 import numpy as np
 
+class EmptyFileError(Exception):
+    def __init__(self):
+        print("要比较的文本为空")
 
 def get_stopwords():
     # 加载停用词，用于去掉不需要的无意义的一些词
@@ -27,6 +30,9 @@ def read_file(path):
             content = f.read()
     except FileNotFoundError:
         print("找不到要对比的文件")
+    if (len(content)==0):
+        raise(EmptyFileError)
+
     # 去掉换行符和空格
     content = content.replace('\n', ' ').replace(' ', '')
     f.close()
